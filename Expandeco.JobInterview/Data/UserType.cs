@@ -9,4 +9,11 @@ namespace Expandeco.JobInterview.Data
         [Required]
         public string Title { get; set; }
     }
+
+    public enum UserTypeId
+    {
+        Manager = 1,
+        Translator = 2,
+        Customer = 3
+    }
 }

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Expandeco.JobInterview.Controllers
 {
@@ -14,40 +15,43 @@ namespace Expandeco.JobInterview.Controllers
     [Route("[controller]")]
     public class TranslationsController : ControllerBase
     {
-        private readonly ApplicationDbContext _dbContext;
         private readonly ILogger<TranslationsController> _logger;
         private readonly ILoggedUserService _loggedUserService;
+        private readonly ITranslationService _translationService;
 
-        public TranslationsController(ApplicationDbContext dbContext, ILogger<TranslationsController> logger, ILoggedUserService loggedUserService)
+        public TranslationsController(ILogger<TranslationsController> logger, ILoggedUserService loggedUserService,
+            ITranslationService translationService)
         {
-            _dbContext = dbContext;
             _logger = logger;
             _loggedUserService = loggedUserService;
+            _translationService = translationService;
         }
 
         [HttpGet]
-        public IEnumerable<Translation> Get()
+        public IActionResult Get()
         {
             var loggedUser = _loggedUserService.Get();
 
-            return _dbContext.Translations
-                .Include(x => x.SourceLanguage)
-                .Include(x => x.TargetLanguage)
-                .Include(x => x.CreatedBy)
-                .Include(x => x.AssignedTo)
-                .ToArray();
+            if (loggedUser == null)
+                return Unauthorized();
+
+            var translations = _translationService.SelectForLoggedUser(loggedUser);
+
+            if (translations.IsNullOrEmpty())
+                return NoContent();
+
+            return Ok(translations.ToArray());
         }
 
         [HttpGet("id")]
         public IActionResult GetById(int id)
         {
             var loggedUser = _loggedUserService.Get();
+            
+            if (loggedUser == null)
+                return Unauthorized();
 
-            var result = _dbContext.Translations
-                .Include(x => x.SourceLanguage)
-                .Include(x => x.TargetLanguage)
-                .Include(x => x.CreatedBy)
-                .Include(x => x.AssignedTo)
+            var result = _translationService.SelectForLoggedUser(loggedUser)
                 .FirstOrDefault(x => x.Id == id);
 
             if (result == null)

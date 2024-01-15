@@ -78,6 +78,7 @@ namespace Expandeco.JobInterview
             services.AddTransient(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
             services.AddTransient<IJwtService, JwtService>();
             services.AddTransient<ILoggedUserService, LoggedUserService>();
+            services.AddTransient<ITranslationService, TranslationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
