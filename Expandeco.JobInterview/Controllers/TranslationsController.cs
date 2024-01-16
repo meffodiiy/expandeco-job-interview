@@ -1,4 +1,5 @@
-﻿using Expandeco.JobInterview.Data;
+﻿using System;
+using Expandeco.JobInterview.Data;
 using Expandeco.JobInterview.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -58,6 +59,31 @@ namespace Expandeco.JobInterview.Controllers
                 return NotFound();
 
             return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("create")]
+        public IActionResult Create([FromForm] Translation translation)
+        {
+            var loggedUser = _loggedUserService.Get();
+            
+            if (loggedUser == null)
+                return Unauthorized();
+            
+            translation.CreatedById = loggedUser.Id;
+
+            try
+            {
+                _translationService.Create(translation);
+            }
+            catch (DbUpdateException e)
+            {;
+                const string errorMessage = "Failed to add translation";
+                Console.Error.WriteLine(errorMessage + ": " + e.Message);
+                return Problem(errorMessage);
+            }
+            
+            return Ok();
         }
     }
 }

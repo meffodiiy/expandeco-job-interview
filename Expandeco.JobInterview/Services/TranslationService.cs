@@ -7,6 +7,8 @@ namespace Expandeco.JobInterview.Services
     public interface ITranslationService
     {
         IQueryable<Translation> SelectForLoggedUser(LoggedUser loggedUser);
+
+        void Create(Translation translation);
     }
     
     public class TranslationService : ITranslationService
@@ -37,6 +39,12 @@ namespace Expandeco.JobInterview.Services
             }
 
             return translations;
+        }
+
+        public void Create(Translation translation)
+        {
+            _dbContext.Add(translation);
+            _dbContext.SaveChanges();
         }
     }
 }

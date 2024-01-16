@@ -1,5 +1,5 @@
 <script>
-	import TranslationsTable from "$lib/TranslationsTable.svelte";
+	import TranslationsTable from "$lib/components/TranslationsTable.svelte";
 	import axios from "axios";
 	import userStore from "$lib/stores/userStore.js";
 	import { onMount } from "svelte";
