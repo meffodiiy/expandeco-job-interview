@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Expandeco.JobInterview.Data
 {
@@ -24,6 +25,8 @@ namespace Expandeco.JobInterview.Data
         public int CreatedById { get; set; }
         
         public int? AssignedToId { get; set; }
+        
+        public DateTime? Deadline { get; set; }
 
         public virtual Language SourceLanguage { get; set; }
         public virtual Language TargetLanguage { get; set; }
