@@ -4,6 +4,7 @@
   import TranslationSelect from '$lib/components/TranslationSelect.svelte'
   import axios from 'axios'
   import {goto} from '$app/navigation'
+  import DatePicker from '$lib/components/DatePicker.svelte'
 
 
   const onSubmit = (e) => {
@@ -33,6 +34,7 @@
     </div>
     <div class="col-12">
       <TextInput label="Názov" name="Title" required/>
+      <DatePicker label="Deadline" name="Deadline"/>
       <TranslationSelect/>
       <TextArea label="Text" name="Text" required/>
     </div>

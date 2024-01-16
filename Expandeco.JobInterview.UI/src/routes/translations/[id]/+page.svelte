@@ -60,14 +60,16 @@
             <Select name="AssignedToId" label="Prekladateľ" options={translators} bind:selected={selectedTranslator}/>
           {:else}
             <input type="hidden" name="AssignedToId" value="{translation.assignedToId}"/>
-            <div class="row text-end">
-              <span class="text-secondary">Prekladateľ</span>
-              <strong>{translation.assignedTo.name}</strong>
+            <div class="d-flex align-items-center text-end">
+              <span class="text-secondary">Prekladateľ: <strong>{translation.assignedTo?.name ?? 'Nikto'}</strong></span>
             </div>
           {/if}
         </div>
         <h6 class="text-secondary mb-3">
           {translation.sourceLanguage.title} → {translation.targetLanguage.title}
+          {#if translation.deadline}
+            • Deadline: {new Date(translation.deadline).toLocaleDateString()}
+          {/if}
         </h6>
         <div class="d-flex flex-row gap-3">
           <TextArea label="Zdrojový jazyk" value="{translation.text}" readonly/>
