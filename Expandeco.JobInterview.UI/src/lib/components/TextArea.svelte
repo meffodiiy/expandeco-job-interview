@@ -14,9 +14,7 @@
     textarea.style.height = `${textarea.scrollHeight}px`
   }
 
-  onMount(() => {
-    updateTextAreaHeight()
-  })
+  onMount(updateTextAreaHeight)
 </script>
 
 <style>

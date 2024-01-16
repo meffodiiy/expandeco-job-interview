@@ -11,7 +11,6 @@
   let datePicker
 
   const triggerCalendar = () => datePicker.showPicker()
-
 </script>
 
 <div class="form-floating mb-3" on:click={triggerCalendar} on:keydown on:keyup on:keypress>

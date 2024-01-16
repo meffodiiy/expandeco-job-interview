@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using AutoMapper;
 using Expandeco.JobInterview.Data;
 using Expandeco.JobInterview.Data.DTO;
@@ -28,14 +27,19 @@ namespace Expandeco.JobInterview.Services
             _dbContext = dbContext;
             _mapper = mapper;
         }
-        
-        public IQueryable<Translation> SelectForLoggedUser(LoggedUser loggedUser)
+
+        private IQueryable<Translation> GetFullTranslations()
         {
-            IQueryable<Translation> translations = _dbContext.Translations
+            return _dbContext.Translations
                 .Include(x => x.SourceLanguage)
                 .Include(x => x.TargetLanguage)
                 .Include(x => x.CreatedBy)
                 .Include(x => x.AssignedTo);
+        }
+        
+        public IQueryable<Translation> SelectForLoggedUser(LoggedUser loggedUser)
+        {
+            var translations = GetFullTranslations();
 
             switch (loggedUser.TypeId)
             {
@@ -53,11 +57,7 @@ namespace Expandeco.JobInterview.Services
         public Translation FindOneForLoggedUser(int id, LoggedUser loggedUser)
         {
             Translation translation;
-            IQueryable<Translation> translations = _dbContext.Translations
-                .Include(x => x.SourceLanguage)
-                .Include(x => x.TargetLanguage)
-                .Include(x => x.CreatedBy)
-                .Include(x => x.AssignedTo);
+            var translations = GetFullTranslations();
             
             switch (loggedUser.TypeId)
             {
@@ -87,7 +87,7 @@ namespace Expandeco.JobInterview.Services
         {
             var translation = _dbContext.Find<Translation>(translationUpdateDto.Id);
             translation = _mapper.Map(translationUpdateDto, translation);
-            Console.WriteLine(translation.Text);
+            
             _dbContext.Update(translation);
             _dbContext.SaveChanges();
         }

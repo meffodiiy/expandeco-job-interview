@@ -6,7 +6,6 @@
   import {goto} from '$app/navigation'
   import DatePicker from '$lib/components/DatePicker.svelte'
 
-
   const onSubmit = (e) => {
     const form = e.currentTarget
 
@@ -24,7 +23,6 @@
       }
     }
   }
-
 </script>
 
 <section>

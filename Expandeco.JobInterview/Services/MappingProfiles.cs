@@ -9,6 +9,7 @@ namespace Expandeco.JobInterview.Services
         public MappingProfiles()
         {
             CreateMap<Translation, TranslationUpdateDto>().ReverseMap();
+            CreateMap<User, TranslatorDto>();
         }
     }
 }

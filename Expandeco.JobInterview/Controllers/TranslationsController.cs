@@ -1,11 +1,9 @@
-﻿using System;
-using Expandeco.JobInterview.Data;
+﻿using Expandeco.JobInterview.Data;
 using Expandeco.JobInterview.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 using System.Linq;
 using Expandeco.JobInterview.Data.DTO;
 using Microsoft.IdentityModel.Tokens;
@@ -80,7 +78,8 @@ namespace Expandeco.JobInterview.Controllers
             catch (DbUpdateException e)
             {;
                 const string errorMessage = "Failed to add translation";
-                Console.Error.WriteLine(errorMessage + ": " + e.Message);
+                _logger.LogError(errorMessage + ": " + e.Message);
+                
                 return Problem(errorMessage);
             }
             
@@ -106,7 +105,8 @@ namespace Expandeco.JobInterview.Controllers
             catch (DbUpdateException e)
             {;
                 const string errorMessage = "Failed to update translation";
-                Console.Error.WriteLine(errorMessage + ": " + e.Message);
+                _logger.LogInformation(errorMessage + ": " + e.Message);
+                
                 return Problem(errorMessage);
             }
             

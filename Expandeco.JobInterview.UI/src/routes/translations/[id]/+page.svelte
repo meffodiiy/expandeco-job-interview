@@ -72,11 +72,9 @@
           {/if}
         </h6>
         <div class="d-flex flex-row gap-3">
-          <TextArea label="Zdrojový jazyk" value="{translation.text}" readonly/>
+          <TextArea label="Zdrojový jazyk" name="" value="{translation.text}" readonly/>
           <TextArea label="Cieľový jazyk" name="TranslatedText" value="{translation.translatedText}" readonly={!canWriteTranslation}/>
         </div>
-      {:else}
-        <h1>Loading...</h1>
       {/if}
     </div>
   </form>

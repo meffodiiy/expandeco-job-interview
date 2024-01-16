@@ -8,7 +8,6 @@
   const onSelect = (e) => {
     selected = options.find(({value}) => String(value) === e.target.value)
   }
-
 </script>
 
 <div class="form-floating">

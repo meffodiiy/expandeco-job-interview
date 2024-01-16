@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using Expandeco.JobInterview.Data.DTO;
 
 namespace Expandeco.JobInterview.Controllers
 {
@@ -15,12 +17,14 @@ namespace Expandeco.JobInterview.Controllers
         private readonly ApplicationDbContext _dbContext;
         private readonly ILogger<UsersController> _logger;
         private readonly IJwtService _jwtService;
+        private readonly IMapper _mapper;
 
-        public UsersController(ApplicationDbContext dbContext, ILogger<UsersController> logger, IJwtService jwtService)
+        public UsersController(ApplicationDbContext dbContext, ILogger<UsersController> logger, IJwtService jwtService, IMapper mapper)
         {
             _dbContext = dbContext;
             _logger = logger;
             _jwtService = jwtService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -31,9 +35,11 @@ namespace Expandeco.JobInterview.Controllers
 
         [HttpGet]
         [Route("Translators")]
-        public IEnumerable<User> GetTranslators()
+        public IEnumerable<TranslatorDto> GetTranslators()
         {
-            return _dbContext.Users.Where(x => x.TypeId == (int) UserTypeId.Translator).ToArray();
+            var users = _dbContext.Users.Where(x => x.TypeId == (int) UserTypeId.Translator);
+            var translatorDtos = _mapper.Map<List<User>, List<TranslatorDto>>(users.ToList());
+            return translatorDtos.ToArray();
         }
 
         [HttpPost("login")]
