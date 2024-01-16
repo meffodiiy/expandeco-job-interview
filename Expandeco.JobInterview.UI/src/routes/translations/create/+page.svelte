@@ -11,9 +11,7 @@
 
     if (form.reportValidity()) {
       axios
-        .post('/Translations/create', new FormData(form), {
-          method: 'POST'
-        })
+        .post('/Translations/create', new FormData(form))
         .then(() => goto('/translations'))
         .catch(err => console.log(err))
     }
@@ -34,9 +32,9 @@
       <input type="submit" value="Uložiť" class="btn btn-primary btn-success"/>
     </div>
     <div class="col-12">
-      <TextInput name="Title" required/>
+      <TextInput label="Názov" name="Title" required/>
       <TranslationSelect/>
-      <TextArea name="Text" required/>
+      <TextArea label="Text" name="Text" required/>
     </div>
   </form>
 </section>

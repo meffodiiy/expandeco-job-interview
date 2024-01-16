@@ -28,7 +28,11 @@
 </script>
 
 <div class="d-flex flex-row justify-content-between mb-3">
-  <Select name="SourceLanguageId" label="Z" required {options} bind:selected={fromLanguage}/>
+  <div class="flex-fill">
+    <Select name="SourceLanguageId" label="Zdrojový jazyk" required {options} bind:selected={fromLanguage}/>
+  </div>
   <button type="button" on:click={swapLanguages} class="btn mx-3 px-4 pb-2 fs-4 btn-primary">⇄</button>
-  <Select name="TargetLanguageId" label="Do" required {options} bind:selected={toLanguage}/>
+  <div class="flex-fill">
+    <Select name="TargetLanguageId" label="Cieľový jazyk" required {options} bind:selected={toLanguage}/>
+  </div>
 </div>

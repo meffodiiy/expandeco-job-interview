@@ -11,11 +11,11 @@
 
 </script>
 
-<div class="form-floating flex-fill">
-  <select required={required} name={name} on:change={onSelect} class="form-select" aria-label="Floating label select example">
+<div class="form-floating">
+  <select {required} {name} on:change={onSelect} class="form-select" aria-label="Floating label select example">
     {#each options as {text, value}, i (value)}
       <option
-        selected={selected ? selected.value === value : i === 0}
+        selected={selected !== undefined ? selected.value === value : i === 0}
         value="{value}"
       >
         {text}

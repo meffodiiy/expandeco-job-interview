@@ -59,3 +59,5 @@ C:\Users\Mykola.Ivanchenko\Desktop\Expandeco.JobInterview\Expandeco.JobInterview
 C:\Users\Mykola.Ivanchenko\Desktop\Expandeco.JobInterview\Expandeco.JobInterview\obj\Debug\net6.0\Expandeco.JobInterview.pdb
 C:\Users\Mykola.Ivanchenko\Desktop\Expandeco.JobInterview\Expandeco.JobInterview\obj\Debug\net6.0\Expandeco.JobInterview.genruntimeconfig.cache
 C:\Users\Mykola.Ivanchenko\Desktop\Expandeco.JobInterview\Expandeco.JobInterview\obj\Debug\net6.0\ref\Expandeco.JobInterview.dll
+C:\Users\Mykola.Ivanchenko\Desktop\Expandeco.JobInterview\Expandeco.JobInterview\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\Mykola.Ivanchenko\Desktop\Expandeco.JobInterview\Expandeco.JobInterview\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

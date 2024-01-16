@@ -1,11 +1,22 @@
 <script>
-  export let name
-  export let required = false
+  import {onMount} from 'svelte'
 
-  const updateTextAreaHeight = (e) => {
-    e.target.style.height = 'auto';
-    e.target.style.height = `${e.target.scrollHeight}px`;
+  export let name
+  export let label
+  export let required = false
+  export let readonly = false
+  export let value = ''
+
+  let textarea
+
+  const updateTextAreaHeight = () => {
+    textarea.style.height = 'auto'
+    textarea.style.height = `${textarea.scrollHeight}px`
   }
+
+  onMount(() => {
+    updateTextAreaHeight()
+  })
 </script>
 
 <style>
@@ -16,7 +27,17 @@
     }
 </style>
 
-<div class="form-floating">
-  <textarea required={required} name={name} on:input={updateTextAreaHeight} class="form-control textarea" placeholder="Text" id="floatingTextarea"></textarea>
-  <label for="floatingTextarea">Text</label>
+<div class="form-floating flex-fill">
+  <textarea
+    {readonly}
+    {required}
+    {name}
+    on:input={updateTextAreaHeight}
+    bind:value
+    bind:this={textarea}
+    class="form-control textarea"
+    placeholder="{label}"
+    id="floatingTextarea"
+  />
+  <label for="floatingTextarea">{label}</label>
 </div>

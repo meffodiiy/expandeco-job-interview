@@ -29,6 +29,13 @@ namespace Expandeco.JobInterview.Controllers
             return _dbContext.Users.Include(x => x.Type).ToArray();
         }
 
+        [HttpGet]
+        [Route("Translators")]
+        public IEnumerable<User> GetTranslators()
+        {
+            return _dbContext.Users.Where(x => x.TypeId == (int) UserTypeId.Translator).ToArray();
+        }
+
         [HttpPost("login")]
         [ProducesResponseType(200, Type = typeof(string))]
         [ProducesResponseType(400)]

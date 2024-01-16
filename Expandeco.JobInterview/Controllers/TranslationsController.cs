@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
+using Expandeco.JobInterview.Data.DTO;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Expandeco.JobInterview.Controllers
@@ -44,7 +45,8 @@ namespace Expandeco.JobInterview.Controllers
             return Ok(translations.ToArray());
         }
 
-        [HttpGet("id")]
+        [HttpGet]
+        [Route("{id}")]
         public IActionResult GetById(int id)
         {
             var loggedUser = _loggedUserService.Get();
@@ -52,8 +54,7 @@ namespace Expandeco.JobInterview.Controllers
             if (loggedUser == null)
                 return Unauthorized();
 
-            var result = _translationService.SelectForLoggedUser(loggedUser)
-                .FirstOrDefault(x => x.Id == id);
+            var result = _translationService.FindOneForLoggedUser(id, loggedUser);
 
             if (result == null)
                 return NotFound();
@@ -79,6 +80,32 @@ namespace Expandeco.JobInterview.Controllers
             catch (DbUpdateException e)
             {;
                 const string errorMessage = "Failed to add translation";
+                Console.Error.WriteLine(errorMessage + ": " + e.Message);
+                return Problem(errorMessage);
+            }
+            
+            return Ok();
+        }
+        
+        [HttpPatch]
+        [Route("update")]
+        public IActionResult Update([FromForm] TranslationUpdateDto translationUpdateDto)
+        {
+            var loggedUser = _loggedUserService.Get();
+            
+            if (loggedUser == null)
+                return Unauthorized();
+
+            if (loggedUser.TypeId == (int) UserTypeId.Customer)
+                return Forbid();
+
+            try
+            {
+                _translationService.Update(translationUpdateDto);
+            }
+            catch (DbUpdateException e)
+            {;
+                const string errorMessage = "Failed to update translation";
                 Console.Error.WriteLine(errorMessage + ": " + e.Message);
                 return Problem(errorMessage);
             }
